@@ -1,0 +1,85 @@
+{
+  "$schema": "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json",
+  "version": 2,
+  "blocks": [
+    {
+      "type": "prompt",
+      "alignment": "left",
+      "segments": [
+        {
+          "type": "os",
+          "style": "plain",
+          "template": "{{ if .WSL }}WSL {{ end }}{{ .Icon }} <lightBlue>{{ .Shell }}</> "
+        },
+        {
+          "type": "path",
+          "style": "plain",
+          "foreground": "#77E4F7",
+          "template": "<b><green>{{ .UserName }}@{{ .HostName }}</></b> {{ .Path }} ",
+          "properties": {
+            "style": "full"
+          }
+        },
+        {
+          "type": "git",
+          "style": "plain",
+          "foreground": "#FFE700",
+          "template": "{{ .HEAD }}{{ if .BranchStatus }} {{ .BranchStatus }}{{ end }}{{ if .Working.Changed }} \uF044 {{ .Working.String }}{{ end }}{{ if and (.Staging.Changed) (.Working.Changed) }} |{{ end }}{{ if .Staging.Changed }} \uF046 {{ .Staging.String }}{{ end }}{{ if gt .StashCount 0 }} \udb80\udd93 {{ .StashCount }}{{ end }} ",
+          "properties": {
+            "fetch_status": true,
+            "fetch_stash_count": true,
+            "fetch_upstream_icon": true
+          }
+        }
+      ]
+    },
+    {
+      "type": "prompt",
+      "alignment": "right",
+      "filler": "\u2500",
+      "segments": [
+        {
+          "type": "executiontime",
+          "style": "plain",
+          "foreground": "lightBlue",
+          "template": " \ueba2 {{ .FormattedMs }}"
+        },
+        {
+          "alias": "Status",
+          "type": "status",
+          "style": "plain",
+          "foreground": "red",
+          "template": " {{ if ne .Code 0 }}\u2717 {{ reason .Code }}{{ end }}"
+        },
+        {
+          "type": "time",
+          "style": "plain",
+          "foreground": "#808080",
+          "foreground_templates": [
+            "{{ if .Segments.Status.Error }}red{{ end }}"
+          ],
+          "template": " <#00C5C7>\uf017 {{ .CurrentDate | date .Format }}</> ",
+          "properties": {
+            "time_format": "15:04:05"
+          }
+        }
+      ]
+    },
+    {
+      "type": "prompt",
+      "newline": true,
+      "alignment": "left",
+      "segments": [
+        {
+          "type": "text",
+          "style": "plain",
+          "foreground": "#43D426",
+          "foreground_templates": [
+            "{{ if .Segments.Status.Error }}red{{ end }}"
+          ],
+          "template": "\u276f "
+        }
+      ]
+    }
+  ]
+}
